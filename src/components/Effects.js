@@ -30,9 +30,9 @@ export default function Effects() {
   }, 1)
   return (
     <effectComposer ref={composer} args={[gl]}>
-      <renderPass attachArray="passes" scene={scene} camera={camera} />
-      <waterPass attachArray="passes" ref={water} />
-      <shaderPass attachArray="passes" args={[GammaCorrectionShader]} />
+      <renderPass attach={(parent, self) => { parent.addPass(self); return () => {} }} scene={scene} camera={camera} />
+      <waterPass attach={(parent, self) => { parent.addPass(self); return () => {} }} ref={water} />
+      <shaderPass attach={(parent, self) => { parent.addPass(self); return () => {} }} args={[GammaCorrectionShader]} />
     </effectComposer>
   )
 }
