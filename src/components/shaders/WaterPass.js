@@ -10,7 +10,7 @@ const WaterShader = {
     time: { type: 'f', value: 0.0 },
     factor: { type: 'f', value: 0.0 },
     freq: { type: 'f', value: 4.0 },
-    amp: { type: 'f', value: 0.015 },
+    amp: { type: 'f', value: 0.0004 },
     resolution: { type: 'v2', value: null },
   },
   vertexShader: `varying vec2 vUv;
@@ -33,10 +33,9 @@ const WaterShader = {
         vec2 uv = vUv;
         float frequency = freq;
         float amplitude = amp * factor;
-        float x = uv.y * frequency + time * .7; 
-        float y = uv.x * frequency + time * .3;
-        uv.x += .5 * amplitude * cos(x);
-        uv.y += .5 * amplitude * sin(y);
+        // one-directional travelling ripple — single axis, very subtle (no 2D wobble)
+        float phase = uv.y * frequency + time * 0.7;
+        uv.x += amplitude * sin(phase);
         vec4 rgba = texture2D(tex, uv);
         gl_FragColor = rgba;
       } else {

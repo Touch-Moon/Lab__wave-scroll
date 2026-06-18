@@ -19,7 +19,7 @@ export default function Effects() {
   const ctrl = useControls('Water', {
     strength:       { value: 1,     min: 0,    max: 4,    step: 0.1 },   // scroll → ripple multiplier
     frequency:      { value: 4,     min: 1,    max: 12,   step: 0.5 },   // ripple density
-    amplitude:      { value: 0.015, min: 0,    max: 0.06, step: 0.001 }, // ripple depth
+    amplitude:      { value: 0.0004, min: 0,   max: 0.006, step: 0.0002 }, // ripple depth (subtle, one-directional)
     speed:          { value: 1,     min: 0,    max: 3,    step: 0.1 },   // wave time speed
     responsiveness: { value: 0.1,   min: 0.02, max: 0.5,  step: 0.01 },  // how fast it reacts / settles
   })
