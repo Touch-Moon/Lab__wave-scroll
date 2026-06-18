@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useRef, useState, useCallback, useLayoutEff
 import { Canvas, useThree, useFrame, useLoader } from '@react-three/fiber'
 import { Flex, Box, useFlexSize } from '@react-three/flex'
 import { Loader, Line, useAspect } from '@react-three/drei'
+import { Leva } from 'leva'
 import Effects from './components/Effects'
 import Text from './components/Text'
 import Geo from './components/Geo'
@@ -166,6 +167,7 @@ export default function App() {
   const [pages, setPages] = useState(0)
   return (
     <>
+      <Leva titleBar={{ title: 'Water — Controls' }} />
       <Canvas
         shadows
         raycaster={{ enabled: false }}

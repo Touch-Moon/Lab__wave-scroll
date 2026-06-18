@@ -9,6 +9,8 @@ const WaterShader = {
     tex: { type: 't', value: null },
     time: { type: 'f', value: 0.0 },
     factor: { type: 'f', value: 0.0 },
+    freq: { type: 'f', value: 4.0 },
+    amp: { type: 'f', value: 0.015 },
     resolution: { type: 'v2', value: null },
   },
   vertexShader: `varying vec2 vUv;
@@ -21,14 +23,16 @@ const WaterShader = {
   uniform int byp;
     uniform float time;
     uniform float factor;
+    uniform float freq;
+    uniform float amp;
     uniform vec2 resolution;
     uniform sampler2D tex;
     varying vec2 vUv;
-    void main() { 
+    void main() {
       if (byp<1) {
         vec2 uv = vUv;
-        float frequency = 4.0;
-        float amplitude = 0.015 * factor;
+        float frequency = freq;
+        float amplitude = amp * factor;
         float x = uv.y * frequency + time * .7; 
         float y = uv.x * frequency + time * .3;
         uv.x += .5 * amplitude * cos(x);
@@ -59,6 +63,7 @@ class WaterPass extends Pass {
     this.scene.add(this.quad)
     this.factor = 0
     this.time = 0
+    this.timeSpeed = 0.01
   }
 
   render(renderer, writeBuffer, readBuffer, deltaTime, maskActive) {
@@ -67,7 +72,7 @@ class WaterPass extends Pass {
     this.uniforms['tex'].value = readBuffer.texture
     this.uniforms['time'].value = this.time
     this.uniforms['factor'].value = this.factor
-    this.time += 0.01
+    this.time += this.timeSpeed
     this.quad.material = this.material
     if (this.renderToScreen) {
       renderer.setRenderTarget(null)
